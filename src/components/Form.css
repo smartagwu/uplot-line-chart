@@ -1,0 +1,22 @@
+form {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+form > .row {
+  display: flex;
+  gap: 30px;
+}
+
+form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  width: 100%;
+  width: 320px;
+}
+
+form .description {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
