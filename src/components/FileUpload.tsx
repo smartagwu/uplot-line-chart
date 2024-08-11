@@ -1,11 +1,12 @@
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import "./FileUpload.css";
-import useJsonFileUploader from "../hooks/useJsonFileUploader";
+import useCSVFileUploader from "../hooks/useCSVFileUploader";
+import useSetFieldValue from "../context/FormContext/useSetFieldValue";
 
 const FileUpload = () => {
   const fileInputRef = useRef(null);
-  const setJsonData = useCallback(() => {}, []);
-  const parseJsonFile = useJsonFileUploader(setJsonData);
+  const setFieldValue = useSetFieldValue("dataset");
+  const parseCSVFile = useCSVFileUploader(setFieldValue);
 
   const triggerFileUpload = () => {
     if (fileInputRef.current) {
@@ -19,10 +20,10 @@ const FileUpload = () => {
         <input
           ref={fileInputRef}
           type="file"
-          name="csv"
+          name="dataset"
           id="csv-file"
           accept=".csv"
-          onChange={parseJsonFile}
+          onChange={parseCSVFile}
         />
         <p>Click to select a CSV file</p>
       </div>

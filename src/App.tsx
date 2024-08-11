@@ -1,13 +1,12 @@
+import Chart from "./components/Chart";
 import Form from "./components/Form";
 
 function App() {
   return (
-    <div>
-      <section>
-        <Form />
-      </section>
-      <section></section>
-    </div>
+    <>
+      <Form />
+      <Chart />
+    </>
   );
 }
 

@@ -5,14 +5,14 @@ export type ContextState = {
   size: number;
   increment: number;
   interval: number;
-  dataset?: object;
+  dataset?: string;
 };
 
 type ContextAction = {
   type: "setFieldValue";
   payload: {
     key: keyof ContextState;
-    value: number | object;
+    value: number | string;
   };
 };
 

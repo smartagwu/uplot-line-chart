@@ -13,6 +13,7 @@ const Form = () => {
           labelId="start-index-label"
           label="Start index (S)"
           description="Data point index of left edge of the window"
+          isValid={(value) => parseInt(value) >= 0}
         />
 
         <NumberInput
@@ -21,6 +22,7 @@ const Form = () => {
           labelId="size-label"
           label="Size of window (N)"
           description="Number of data points to draw"
+          isValid={(value) => parseInt(value) >= 2}
         />
       </div>
 
