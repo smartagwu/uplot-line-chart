@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback } from "react";
 
-type FunnelDataType = unknown;
+type FunnelDataType = object;
 
 export type JsonDataResult = { jsonData: FunnelDataType; fileName: string };
 
