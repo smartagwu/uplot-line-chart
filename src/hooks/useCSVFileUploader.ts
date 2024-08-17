@@ -1,11 +1,30 @@
 import { ChangeEvent, useCallback } from "react";
+import useDownSampleServiceWorker from "./useDownSampleServiceWorker";
 
 export type CSVData = { [key: string]: string };
 
 type FileInput = HTMLInputElement & { files: [] };
 
-const useCSVFileUploader = (setFieldValue: (value: string) => void) =>
-  useCallback(
+// const getDataPoints = (dataset: number[][]) => {
+//   const dataPoints = dataset.reduce<uPlot.AlignedData>(
+//     (acc, [xAvg, yAvg]: number[]) => {
+//       if (isNaN(xAvg) || isNaN(yAvg)) {
+//         return acc;
+//       }
+//       return [
+//         [...acc[0], xAvg],
+//         [...acc[1], yAvg],
+//       ];
+//     },
+//     [[], []],
+//   );
+//   return dataPoints;
+// };
+
+const useCSVFileUploader = () => {
+  const { processCSVData } = useDownSampleServiceWorker();
+
+  return useCallback(
     (event: ChangeEvent<FileInput>) => {
       const file = event.target.files[0] as File;
       const csvParser = new Promise<string>((resolve, reject) => {
@@ -22,10 +41,10 @@ const useCSVFileUploader = (setFieldValue: (value: string) => void) =>
       });
 
       csvParser
-        .then((data) => setFieldValue(data))
+        .then((data) => processCSVData(data))
         .catch((err: unknown) => console.log(err));
     },
-    [setFieldValue],
+    [processCSVData],
   );
-
+};
 export default useCSVFileUploader;

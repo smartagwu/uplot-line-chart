@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { ContextState, FormContext } from "./FormContext";
+import { ContextState } from "./FormContext";
+import useFieldContextValues from "./useFieldContextValues";
 
 const useFieldContextValue = <T>(key: keyof ContextState) =>
-  useContext(FormContext)[0][key] as T;
+  useFieldContextValues()[key] as T;
 
 export default useFieldContextValue;

@@ -9,8 +9,6 @@ type NumberInputProps = {
   label: string;
   description: string;
   labelId: string;
-  min?: number;
-  max?: number;
   isValid?: (value: string) => boolean;
 };
 
@@ -35,10 +33,9 @@ const NumberInput = ({
         id={id}
         value={fieldValue}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          const isValidValue =
-            isValid && typeof isValid === "function" && isValid(e.target.value);
-          if (isValid === undefined || isValidValue) {
-            setFieldValue(e.target.value);
+          const value = e.target.value;
+          if (isValid && typeof isValid === "function" && isValid(value)) {
+            setFieldValue(value);
           }
         }}
         aria-labelledby={labelId}

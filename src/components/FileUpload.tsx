@@ -1,12 +1,10 @@
 import { useRef } from "react";
 import "./FileUpload.css";
 import useCSVFileUploader from "../hooks/useCSVFileUploader";
-import useSetFieldValue from "../context/FormContext/useSetFieldValue";
 
 const FileUpload = () => {
   const fileInputRef = useRef(null);
-  const setFieldValue = useSetFieldValue("dataset");
-  const parseCSVFile = useCSVFileUploader(setFieldValue);
+  const uploadCSVFile = useCSVFileUploader();
 
   const triggerFileUpload = () => {
     if (fileInputRef.current) {
@@ -20,10 +18,10 @@ const FileUpload = () => {
         <input
           ref={fileInputRef}
           type="file"
-          name="dataset"
+          name="csv"
           id="csv-file"
           accept=".csv"
-          onChange={parseCSVFile}
+          onChange={uploadCSVFile}
         />
         <p>Click to select a CSV file</p>
       </div>
