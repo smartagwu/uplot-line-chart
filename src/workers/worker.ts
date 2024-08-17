@@ -1,13 +1,18 @@
+import {
+  DataPoints,
+  DownSampleDataPoints,
+} from "../context/FormContext/FormContext";
+
 onmessage = function (
   this: Window,
   ev: MessageEvent<{
     startIndex: number;
-    points: (number | number[])[][];
+    points: DownSampleDataPoints;
     endIndex: number;
   }>,
 ) {
   const { points, startIndex, endIndex } = ev.data;
-  const dataPoints = points.slice(startIndex, endIndex).reduce<number[][]>(
+  const dataPoints = points.slice(startIndex, endIndex).reduce<DataPoints>(
     (acc, dataPoint) => {
       if (typeof dataPoint[1] === "number" && !Array.isArray(dataPoint[1])) {
         return [

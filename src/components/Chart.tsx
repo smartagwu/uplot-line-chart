@@ -56,13 +56,11 @@ const Chart = () => {
     if (dataPoints[0].length === 0) {
       return;
     }
-
     chartRef.current = new uPlot(
       options,
       dataPoints,
       targetRef.current as HTMLDivElement,
     );
-
     return () => {
       if (chartRef.current) {
         chartRef.current.destroy();

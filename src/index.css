@@ -33,3 +33,9 @@ span {
 .uplot-chart {
   margin-top: 50px;
 }
+
+.error {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+}

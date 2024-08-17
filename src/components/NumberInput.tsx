@@ -1,15 +1,15 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import useSetFieldValue from "../context/FormContext/useSetFieldValue";
-import useFieldContextValue from "../context/FormContext/useFieldContextValue";
+import useFormValues from "../context/FormContext/useFormValues";
 import { ContextState } from "../context/FormContext/FormContext";
 
 type NumberInputProps = {
-  name: keyof ContextState;
+  name: keyof ContextState["formValues"];
   id: string;
   label: string;
   description: string;
   labelId: string;
-  isValid?: (value: string) => boolean;
+  isValid?: (value: number) => boolean;
 };
 
 const NumberInput = ({
@@ -21,7 +21,16 @@ const NumberInput = ({
   isValid,
 }: NumberInputProps) => {
   const setFieldValue = useSetFieldValue(name);
-  const fieldValue = useFieldContextValue<number>(name);
+  const fieldValue = useFormValues();
+  const updateFieldValue = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const value = parseFloat(e.target.value);
+      if (isValid && typeof isValid === "function" && isValid(value)) {
+        setFieldValue(value);
+      }
+    },
+    [isValid, setFieldValue],
+  );
 
   return (
     <label>
@@ -31,13 +40,8 @@ const NumberInput = ({
         type="number"
         name={name}
         id={id}
-        value={fieldValue}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          const value = e.target.value;
-          if (isValid && typeof isValid === "function" && isValid(value)) {
-            setFieldValue(value);
-          }
-        }}
+        value={fieldValue[name]}
+        onChange={updateFieldValue}
         aria-labelledby={labelId}
       />
     </label>

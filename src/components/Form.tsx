@@ -1,29 +1,28 @@
 import Button from "./Button";
 import FileUpload from "./FileUpload";
 import NumberInput from "./NumberInput";
-import "./Form.css";
 import useSetStartIncrementOnInterval from "../context/FormContext/useSetStartIncrementOnInterval";
-import useIncrementOnInterval from "../context/FormContext/useIncrementOnInterval";
 import { MAX_DATA_POINTS, MAX_INTERVAL } from "../constant";
 import useFieldContextValues from "../context/FormContext/useFieldContextValues";
+import useFormValues from "../context/FormContext/useFormValues";
+import Row from "./Row";
+import "./Form.css";
 
 const Form = () => {
-  const incrementOnInterval = useIncrementOnInterval();
+  const { start, size } = useFormValues();
   const setIncrementOnInterval = useSetStartIncrementOnInterval();
-  const { startIndex, size } = useFieldContextValues();
+  const { incrementOnInterval } = useFieldContextValues();
 
   return (
-    <form>
-      <div className="row">
+    <form id="uplot-chart-form">
+      <Row>
         <NumberInput
-          name="startIndex"
+          name="start"
           id="start-index"
           labelId="start-index-label"
           label="Start index (S)"
           description="Data point index of left edge of the window"
-          isValid={(value) =>
-            parseFloat(value) >= 0 && parseFloat(value) < size
-          }
+          isValid={(value) => value >= 0 && value < size}
         />
 
         <NumberInput
@@ -33,23 +32,20 @@ const Form = () => {
           label="Size of window (N)"
           description="Number of data points to draw"
           isValid={(value) =>
-            (parseFloat(value) === 2 ||
-              parseFloat(value) > Math.max(2, startIndex)) &&
-            parseFloat(value) <= MAX_DATA_POINTS
+            (value === 2 || value > Math.max(2, start)) &&
+            value <= MAX_DATA_POINTS
           }
         />
-      </div>
+      </Row>
 
-      <div className="row">
+      <Row>
         <NumberInput
           name="increment"
           id="increment"
           labelId="increment-label"
           label="Increment by (P)"
           description="Size between each data points"
-          isValid={(value) =>
-            parseFloat(value) >= 0 && parseFloat(value) <= MAX_DATA_POINTS
-          }
+          isValid={(value) => value >= 0 && value <= MAX_DATA_POINTS}
         />
 
         <NumberInput
@@ -58,22 +54,21 @@ const Form = () => {
           labelId="interval-label"
           label="Interval (T) (milliseconds)"
           description="Time interval until start index is incremented"
-          isValid={(value) =>
-            parseFloat(value) >= 16 && parseFloat(value) <= MAX_INTERVAL
-          }
+          isValid={(value) => value >= 16 && value <= MAX_INTERVAL}
         />
-      </div>
+      </Row>
 
-      <div className="row">
+      <Row>
         <FileUpload />
-      </div>
+      </Row>
 
-      <div className="row">
+      <Row>
         <Button
+          type="button"
           text={incrementOnInterval ? "Stop" : "Start"}
           onClick={() => setIncrementOnInterval(!incrementOnInterval)}
         />
-      </div>
+      </Row>
     </form>
   );
 };

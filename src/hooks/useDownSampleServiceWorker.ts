@@ -2,6 +2,10 @@ import { useMemo, useCallback, useEffect } from "react";
 import { DATA_POINTS_THRESHOLD } from "../constant";
 import useSetDataPointsValue from "../context/FormContext/useSetDataPointsValue";
 import Worker from "../workers/downSampleWorker?worker";
+import {
+  DataPoints,
+  DownSampleDataPoints,
+} from "../context/FormContext/FormContext";
 
 const useDownSampleServiceWorker = () => {
   const setDataPointsValue = useSetDataPointsValue();
@@ -29,8 +33,8 @@ const useDownSampleServiceWorker = () => {
   useEffect(() => {
     serviceWorker.onmessage = (
       ev: MessageEvent<{
-        dataPoints: number[][];
-        downSampleDataPoints: (number | number[])[][];
+        dataPoints: DataPoints;
+        downSampleDataPoints: DownSampleDataPoints;
       }>,
     ) => {
       const { dataPoints, downSampleDataPoints } = ev.data;

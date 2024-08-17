@@ -1,54 +1,16 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import useFieldContextValues from "../context/FormContext/useFieldContextValues";
-import useIncrementOnInterval from "../context/FormContext/useIncrementOnInterval";
 import useChartServiceWorker from "./useChartServiceWorker";
-import { DATA_POINTS_THRESHOLD } from "../constant";
+import useFormValues from "../context/FormContext/useFormValues";
+import useChartScaleProps from "./useChartScaleProps";
 
 const useDataPoints = () => {
-  const {
-    startIndex: _startIndex,
-    size,
-    increment,
-    interval,
-    dataPoints: _dataPoints,
-    downSampleDataPoints = [],
-  } = useFieldContextValues();
   const intervalRef = useRef<number>();
-  const incrementOnInterval = useIncrementOnInterval();
+  const { increment, interval } = useFormValues();
+  const { incrementOnInterval } = useFieldContextValues();
   const [incrementCount, setIncrementCount] = useState(0);
-  const points =
-    Math.min(size, _dataPoints.length) - _startIndex > DATA_POINTS_THRESHOLD
-      ? downSampleDataPoints
-      : _dataPoints;
-
-  const isAtEndOfRange =
-    points.length === 0
-      ? false
-      : size + incrementCount >= (points[points.length - 1][0] as number);
-
-  const endIndex = useMemo(() => {
-    if (isAtEndOfRange) {
-      return points.length;
-    }
-    return points.findIndex((point) => {
-      const pointX = point[0] as number;
-      return pointX >= size + incrementCount;
-    });
-  }, [incrementCount, isAtEndOfRange, points, size]);
-
-  const startIndex = useMemo(() => {
-    if (isAtEndOfRange) {
-      return points.findIndex((point) => {
-        const pointX = point[0] as number;
-        return pointX >= (points[points.length - 1][0] as number) - size;
-      });
-    }
-
-    return points.findIndex((point) => {
-      const pointX = point[0] as number;
-      return pointX >= _startIndex + incrementCount;
-    });
-  }, [_startIndex, incrementCount, isAtEndOfRange, points, size]);
+  const { points, startIndex, endIndex, isAtEndOfRange } =
+    useChartScaleProps(incrementCount);
 
   const { dataPoints } = useChartServiceWorker({
     points,

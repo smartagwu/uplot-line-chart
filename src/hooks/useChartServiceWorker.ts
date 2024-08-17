@@ -1,13 +1,13 @@
 import { useMemo, useEffect, useState } from "react";
 import Worker from "../workers/worker?worker";
-import useIncrementOnInterval from "../context/FormContext/useIncrementOnInterval";
 import useSetCSVLoadingDone from "../context/FormContext/useSetCSVLoadingDone";
-import useCSVLoadingInProgress from "../context/FormContext/useCSVLoadingInProgress";
+import useFieldContextValues from "../context/FormContext/useFieldContextValues";
+import { DownSampleDataPoints } from "../context/FormContext/FormContext";
 
 type WorkerMessage = {
   startIndex: number;
   endIndex: number;
-  points: (number | number[])[][];
+  points: DownSampleDataPoints;
 };
 
 const useChartServiceWorker = ({
@@ -15,11 +15,11 @@ const useChartServiceWorker = ({
   startIndex,
   endIndex,
 }: WorkerMessage) => {
-  const incrementOnInterval = useIncrementOnInterval();
+  const { incrementOnInterval } = useFieldContextValues();
   const [dataPoints, setDataPoints] = useState<uPlot.AlignedData>([[], []]);
   const serviceWorker = useMemo(() => new Worker(), []);
   const setCSVLoadingDone = useSetCSVLoadingDone();
-  const csvLoadingInProgress = useCSVLoadingInProgress();
+  const { csvLoadingInProgress } = useFieldContextValues();
 
   useEffect(() => {
     if (points.length > 0) {
