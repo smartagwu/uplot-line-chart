@@ -28,6 +28,14 @@ npm run dev
 
 Then go to http://localhost:4000 on your browser to view the app
 
+### Building The Project
+
+To bundle the project for production, run
+
+```bash
+npm run build
+```
+
 ### Formatting The Project
 
 The project requires Prettier and ESLint installed. It is generally recommended to format on save. To format run
