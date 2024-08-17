@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+# uPlot Chart App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An app that renders a visual representation of an uploaded CSV file. This app also allows you to configure animate the chart.
 
-Currently, two official plugins are available:
+To note, fields run validation on their values before storing in the app state. Start index can not have a value equal or greater than the size of window and the size of window can not be equal or smaller than the start index.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Fields can not be empty and a csv file must be uploaded before the chart can animate and increment.
 
-## Expanding the ESLint configuration
+## Downsampling
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The prpject downsamples uploaded dataset at a threshold of 10,000 datapoints
 
-- Configure the top-level `parserOptions` property like this:
+### Install Project Dependencies
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+To install, clone the project and run
+
+```bash
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Start Project
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
+To start the project, run
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
+```bash
+npm run dev
 ```
+
+Then go to http://localhost:4000 on your browser to view the app
+
+### Formatting The Project
+
+The project requires Prettier and ESLint installed. It is generally recommended to format on save. To format run
+
+```bash
+npm run format
+```
+
+You wll be required to format the project before adding a commit.
