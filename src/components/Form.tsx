@@ -7,11 +7,18 @@ import useFieldContextValues from "../context/FormContext/useFieldContextValues"
 import useFormValues from "../context/FormContext/useFormValues";
 import Row from "./Row";
 import "./Form.css";
+import { useCallback } from "react";
 
 const Form = () => {
   const { start, size } = useFormValues();
   const setIncrementOnInterval = useSetStartIncrementOnInterval();
   const { incrementOnInterval } = useFieldContextValues();
+  const { dataPoints } = useFieldContextValues();
+  const incrementChart = useCallback(() => {
+    if (dataPoints[0] && dataPoints[0].length > 0) {
+      setIncrementOnInterval(!incrementOnInterval);
+    }
+  }, [dataPoints, incrementOnInterval, setIncrementOnInterval]);
 
   return (
     <form id="uplot-chart-form">
@@ -66,7 +73,7 @@ const Form = () => {
         <Button
           type="button"
           text={incrementOnInterval ? "Stop" : "Start"}
-          onClick={() => setIncrementOnInterval(!incrementOnInterval)}
+          onClick={incrementChart}
         />
       </Row>
     </form>
