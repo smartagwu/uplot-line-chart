@@ -32,3 +32,11 @@
   margin: 0 auto;
   padding: 60px 0px;
 }
+
+@media screen and (max-width: 600px) {
+  .file-upload {
+    width: -moz-available; /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
+  }
+}
