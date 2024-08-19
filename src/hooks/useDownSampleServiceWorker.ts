@@ -1,5 +1,5 @@
 import { useMemo, useCallback, useEffect } from "react";
-import { DATA_POINTS_THRESHOLD } from "../constant";
+import { DATA_POINTS_THRESHOLD, MAX_DATA_POINTS } from "../constant";
 import useSetDataPointsValue from "../context/FormContext/useSetDataPointsValue";
 import Worker from "../workers/downSampleWorker?worker";
 import {
@@ -14,6 +14,11 @@ const useDownSampleServiceWorker = () => {
   const processCSVData = useCallback(
     (data: string) => {
       const dataSeries = data.length > 0 ? data.trim().split("\n") : [];
+      if (dataSeries.length > MAX_DATA_POINTS) {
+        console.log("Maximum data points reached");
+        return;
+      }
+
       const dataPoints = dataSeries.map((series) =>
         series.split(",").map((point) => parseFloat(point)),
       );
