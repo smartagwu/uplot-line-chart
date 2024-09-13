@@ -6,6 +6,9 @@ To note, fields run validation on their values before storing in the app state. 
 
 Fields can not be empty and a csv file must be uploaded before the chart can animate and increment.
 
+## Sample Dataset
+https://drive.google.com/file/d/1ko5tJqJaNzXKySf8HNKhOqO6gB9cnsN4/view?usp=sharing
+
 ## Downsampling
 
 The prpject downsamples uploaded dataset at a threshold of 10,000 datapoints
